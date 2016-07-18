@@ -1,0 +1,32 @@
+#!/bin/bash -l
+#Note: Comments are right below their respective PBS statements; Joe Garcia, jhg.eps~~@~~gmail
+
+#PBS -q batch
+# specifies to send the simulation to the batch queue
+
+#PBS -N PBS_500_0.75_4000_5p  
+# allows the job to have a name within the queue
+
+#PBS -l procs=5
+# specifies that 5 processing cores will tackle the parallel simulation
+
+#PBS -l walltime=340:00:00
+# the maximum wall clock time that the job can take (H:M:S); this includes the time spent waiting in the queue
+
+#PBS -o L500_0.75_4000_5p.txt
+# sets standard-out for the different processes to route to a data file-- L500_0.75_4000_5p.txt
+# 500 is the system size L, 0.75 is the long-range interaction probability "p", and 4000 is the number of trials per x-value, N.
+
+#PBS -e L500_0.75_4000_5pe.txt
+# sets standard-error for the different processes to route to a data file-- L500_0.75_4000_5pe.txt
+
+cd $PBS_O_WORKDIR  
+# change directory to PBS's working directory
+
+module load openmpi/gnu/1.8.1   
+# load the Open MPI module that will run the parallel program
+
+mpirun ./PARALLEL 500 0.75 4000
+# Get that simulation running with the desired parameters! If one wanted, they could pass 500, 0.75, and 4000 as CL parameters, and
+# then use $1, $2, $3 for the variable names inside this script instead. 
+
