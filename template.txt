@@ -1,0 +1,24 @@
+###########################################
+#!/bin/bash -l
+#PBS -q batch
+#PBS -N PBS_SYS_SIZE_PVAL_NOR_NUMPROCS_p
+#PBS -l procs=NUMPROCS
+#PBS -l walltime=340:00:00
+
+#PBS -o NSYS_SIZE_PVAL_NOR_NUMPROCS_p.txt
+#PBS -e NSYS_SIZE_PVAL_NOR_NUMPROCS_pe.txt
+
+
+#mpiexec -np 4 ./MPI1_2_XRANGE_ONE_UPDATE 1000 1 20 35 55    COMMENT
+#L / p / NOR / begin_x / end_x                               COMMENT
+
+cd $PBS_O_WORKDIR
+
+module load openmpi/gnu/1.8.1
+
+mpirun -np NUMPROCS ./MPI1_2_XRANGE_ONE_UPDATE SYS_SIZE PVAL NOR 49 51 # have to make sure my C-code knows which argument is which
+##########################################
+
+
+
+
